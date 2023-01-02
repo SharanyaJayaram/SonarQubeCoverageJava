@@ -1,7 +1,7 @@
 node(){
 	
 	def mvnHome = tool 'MavenBuildTool'
-	def sonarScanner = tool name: 'Sonarfirst', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+	def sonarScanner = tool name: 'SonarSha', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
 
 	
 	try {
@@ -10,7 +10,7 @@ node(){
 		}
 		
 		stage('Maven Build'){
-			sh "${mvnHome}/bin/mvn clean install"
+			sh "${mvnHome}/bin/mvn clean install -Dmaven.test.skip=true"
 		}
 		
 		stage('Test Cases Execution'){
