@@ -1,7 +1,7 @@
 node(){
 	
 	def mvnHome = tool 'MavenBuildTool'
-	def sonarScanner = tool name: 'SonarSha', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+	
 
 	
 	try {
@@ -19,7 +19,7 @@ node(){
 		
 		stage('SonarQube Analysis'){
 			withSonarQubeEnv(credentialsId: '5b27e7f4-248f-4da0-975d-6717cae07ec9') {
-    // some block
+				def sonarScanner = tool name: 'SonarSha', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
 }
 		}
 		
