@@ -1,7 +1,8 @@
 node(){
 	
 	def mvnHome = tool 'MavenBuildTool'
-	def sonarScannerHome = tool 'SonarSha', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+	def sonarScanner = tool name: 'SonarSha', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+
 	
 	try {
 		stage('Checkout Code'){
