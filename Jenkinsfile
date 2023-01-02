@@ -1,11 +1,11 @@
 node(){
 	
 	def mvnHome = tool 'MavenBuildTool'
-	def sonarScannerHome = tool 'Scanner'
+	def sonarScannerHome = tool 'SonarSha'
 	
 	try {
 		stage('Checkout Code'){
-			checkout scm
+			checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'ee50f028-40a3-4979-bc03-89dce5dd2b07', url: 'https://github.com/SharanyaJayaram/SonarQubeCoverageJava.git']])
 		}
 		
 		stage('Maven Build'){
@@ -17,14 +17,12 @@ node(){
 		}
 		
 		stage('SonarQube Analysis'){
-			/*withCredentials([string(credentialsId: 'SonarQubeToken', variable: 'SONARQUBE_TOKEN')]) {
-				//sh "${sonarScannerHome}/bin/sonar-scanner -Dsonar.host.url=http://35.172.192.145:9000/ -Dsonar.login=${SONARQUBE_TOKEN} -Dsonar.projectKey=com.example:java-example-project"
-			}*/
+			withSonarQubeEnv(credentialsId: '5b27e7f4-248f-4da0-975d-6717cae07ec9') {
+    // some block
+}
 		}
 		
-		stage('Archive Artifacts'){
-			archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
-		}
+		
 	}
 	catch (Exception e){
 		currentBuild.result = 'FAILURE'
